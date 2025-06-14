@@ -1,9 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        SONAR_TOKEN = credentials('sonar') // Jenkins secret with your SonarQube token
-    }
+    stages {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
@@ -13,16 +11,15 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Push Docker Image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push adijaiswal/adservice:latest"
+                        sh "docker push adijaiswal/adservice:latest "
                     }
                 }
             }
         }
-
-    } // end stages
+    }
 }
