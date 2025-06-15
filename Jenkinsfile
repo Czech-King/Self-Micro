@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     environment {
-        SONAR_PROJECT_KEY = 'my-gradle-app'               // SonarQube project key
-        SONAR_TOKEN = credentials('sonar')                // SonarQube token from Jenkins credentials
-       
+        SONAR_PROJECT_KEY = 'my-gradle-app'
+        SONAR_TOKEN = credentials('sonar')
+        DOCKER_IMAGE = 'priyaa95/adservice:latest'
     }
 
     stages {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
-                    sh ''chmod +x ./gradlew''
-                    sh "./gradlew sonarqube " +
-                       "-Dsonar.projectKey=${SONAR_PROJECT_KEY} " +
-                       "-Dsonar.login=${SONAR_TOKEN}"
+                    sh '''chmod +x ./gradlew
+./gradlew sonarqube \
+  -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+  -Dsonar.login=${SONAR_TOKEN}'''
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}")
+                    docker.build(DOCKER_IMAGE)
                 }
             }
         }
@@ -31,8 +31,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                      //  sh "docker push ${DOCKER_IMAGE}"
-                        sh "docker push priyaa95/adervice:latest "
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
             }
