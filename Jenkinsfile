@@ -11,6 +11,18 @@ pipeline {
                 }
             }
         }
+        environment {
+        SONAR_PROJECT_KEY = 'my-gradle-app'              // Your project key in SonarQube    
+        SONAR_TOKEN = credentials('sonar')         // Jenkins credential ID for SonarQube token
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar') {  // Name as configured in Jenkins
+                    sh './gradlew sonarqube -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.login=$SONAR_TOKEN'
+                }
+            }
+        }
+
         
         stage('Push Docker Image') {
             steps {
