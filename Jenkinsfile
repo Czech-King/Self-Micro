@@ -1,12 +1,13 @@
 pipeline {
     agent any
+
     tools {
-    jdk 'jdk17'
-}
+        jdk 'jdk17'
+    }
 
     environment {
-        SONAR_PROJECT_KEY = 'my-gradle-app'
-        SONAR_TOKEN = credentials('sonar')
+        SONAR_PROJECT_KEY = 'adservice'
+        SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
         DOCKER_IMAGE = 'priyaa95/adservice:latest'
     }
 
@@ -14,10 +15,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
-                    sh '''chmod +x ./gradlew
-JAVA_HOME=$JAVA_HOME PATH=$JAVA_HOME/bin:$PATH ./gradlew sonarqube \
-  -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-  -Dsonar.login=${SONAR_TOKEN}'''
+                    sh '''
+                        chmod +x ./gradlew
+                        ./gradlew sonarqube \
+                          -Dsonar.projectKey=$SONAR_PROJECT_KEY \
+                          -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
