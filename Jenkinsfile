@@ -4,18 +4,10 @@ pipeline {
     environment {
         SONAR_PROJECT_KEY = 'my-gradle-app'               // SonarQube project key
         SONAR_TOKEN = credentials('sonar')                // SonarQube token from Jenkins credentials
-    
+       
     }
 
     stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}")
-                }
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
@@ -26,11 +18,20 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE}")
+                }
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push ${DOCKER_IMAGE}"
+                      //  sh "docker push ${DOCKER_IMAGE}"
+                        sh "docker push priyaa95/adervice:latest "
                     }
                 }
             }
