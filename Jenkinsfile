@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+    jdk 'jdk21'
+}
 
     environment {
         SONAR_PROJECT_KEY = 'my-gradle-app'
