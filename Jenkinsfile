@@ -11,6 +11,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
+                    sh ''chmod +x ./gradlew''
                     sh "./gradlew sonarqube " +
                        "-Dsonar.projectKey=${SONAR_PROJECT_KEY} " +
                        "-Dsonar.login=${SONAR_TOKEN}"
