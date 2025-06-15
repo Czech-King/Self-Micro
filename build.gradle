@@ -3,6 +3,14 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'idea'
     id 'application'
+    id "org.sonarqube" version "4.0.0.2929" //sonar
+}
+sonarqube {
+    properties {
+        property "sonar.projectKey", "adservice"
+        property "sonar.sources", "src"
+        property "sonar.java.binaries", "build"
+    }
 }
 
 repositories {
