@@ -20,7 +20,8 @@ pipeline {
                 withSonarQubeEnv('sonar') {
                     sh '''
                         chmod +x ./gradlew
-                        ./gradlew sonarqube \
+                        ./gradlew sonar.login \
+                        sh 'cat build/sonar/report-task.txt || echo "report-task.txt not found"'
                           -Dsonar.projectKey=$SONAR_PROJECT_KEY \
                           -Dsonar.login=$SONAR_TOKEN
                     '''
