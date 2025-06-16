@@ -12,6 +12,7 @@ pipeline {
 
     tools {
         go 'Go-1.24'
+        sonarQube 'SonarScanner'
     }
 
     stages {
@@ -41,9 +42,9 @@ pipeline {
                         sonar-scanner \
                         -Dsonar.projectKey=checkoutservice \
                         -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_TOKEN \
                         -Dsonar.go.coverage.reportPaths=coverage.out
+                        -Dsonar.login=${SONAR_TOKEN} \
+                        
                     """
                 }
             }
