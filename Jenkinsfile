@@ -15,6 +15,14 @@ pipeline {
     }
 
     stages {
+        stage('Trivy FS Scan') {
+            steps {
+                sh '''
+                    echo "🔍 Scanning workspace with Trivy..."
+                    trivy fs --exit-code 0 --severity HIGH,CRITICAL .
+                '''
+            }
+        }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
