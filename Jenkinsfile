@@ -50,6 +50,13 @@ pipeline {
              sh 'trivy image priyaa95/adservice:latest || true'
           }
        }
+       stage('Nexus Publish') {
+          steps {
+             withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                sh './gradlew publish -PnexusUser=$NEXUS_USER -PnexusPassword=$NEXUS_PASS'
+        }
+    }
+}
 
         stage('Push Docker Image') {
             steps {
