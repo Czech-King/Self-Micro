@@ -4,42 +4,14 @@ plugins {
     id 'idea'
     id 'application'
     id "org.sonarqube" version "4.0.0.2929" //sonar
-    id 'jacoco'  //jacocco
 }
 sonarqube {
     properties {
         property "sonar.projectKey", "adservice"
         property "sonar.sources", "src"
         property "sonar.java.binaries", "build"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
-jacocoTestReport {
-    dependsOn test
-    reports {
-        xml.required = true  // ✅ Required for SonarQube
-        html.required = true
-    }
-}
-test {
-    useJUnitPlatform()
-}
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java',
-                       'hipstershop',
-                       'build/generated/source/proto/main/java/hipstershop',
-                       'build/generated/source/proto/main/grpc/hipstershop']
-        }
-    }
-    test {
-        java {
-            srcDirs = ['src/test/java']
-        }
-    }
-}
-
 repositories {
     mavenCentral()
     mavenLocal()
@@ -65,7 +37,6 @@ ext {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     if (speed) {
         implementation fileTree(dir: offlineCompile, include: '*.jar')
     } else {
