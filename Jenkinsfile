@@ -36,7 +36,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                script {
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
                         ${SONAR_RUNNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=checkoutservice \
