@@ -21,11 +21,23 @@ jacocoTestReport {
         html.required = true
     }
 }
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-}
 test {
     useJUnitPlatform()
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java',
+                       'hipstershop',
+                       'build/generated/source/proto/main/java/hipstershop',
+                       'build/generated/source/proto/main/grpc/hipstershop']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
 }
 
 repositories {
@@ -53,6 +65,7 @@ ext {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     if (speed) {
         implementation fileTree(dir: offlineCompile, include: '*.jar')
     } else {
