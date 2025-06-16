@@ -6,8 +6,8 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'sonar' // Replace with your SonarQube server name in Jenkins config
-        SONAR_TOKEN = credentials('sonar') // Replace with your credential ID
+        SONARQUBE_SERVER = 'sonar' // Must match the name in Jenkins -> Manage Jenkins -> Configure System
+        SONAR_TOKEN = credentials('sonar') // Jenkins credential ID for SonarQube token
     }
 
     tools {
@@ -39,20 +39,18 @@ pipeline {
                 script {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=checkoutservice \
-                        -Dsonar.sources=. \
-                        -Dsonar.go.coverage.reportPaths=coverage.out \
-                        -Dsonar.login=${SONAR_TOKEN} 
-                        
-                    """
+                        sh '''#!/bin/bash
+                            ${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=checkoutservice \
+                            -Dsonar.sources=. \
+                            -Dsonar.go.coverage.reportPaths=coverage.out \
+                            -Dsonar.login=$SONAR_TOKEN
+                        '''
+                    }
                 }
             }
         }
-      }
 
-    stages {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
@@ -62,12 +60,12 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Push Docker Image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push priyaa95/shippingservice:latest "
+                        sh "docker push priyaa95/shippingservice:latest"
                     }
                 }
             }
