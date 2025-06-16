@@ -20,7 +20,7 @@ pipeline {
                 withSonarQubeEnv('sonar') {
                     sh '''
                         chmod +x ./gradlew
-                        ./gradlew sonar.token \
+                        ./gradlew sonarqube \
                           -Dsonar.projectKey=$SONAR_PROJECT_KEY \
                           -Dsonar.login=$SONAR_TOKEN
                     '''
