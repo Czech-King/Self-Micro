@@ -52,7 +52,6 @@ pipeline {
         }
       }
 
-    stages {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
@@ -73,4 +72,4 @@ pipeline {
             }
         }
     }
-}
+
