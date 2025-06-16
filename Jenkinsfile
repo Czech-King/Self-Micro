@@ -43,6 +43,11 @@ pipeline {
                 }
             }
         }
+       stage('Trivy Docker Image Scan') {
+          steps {
+             sh 'trivy image priyaa95/adservice:latest || true'
+          }
+       }
 
         stage('Push Docker Image') {
             steps {
