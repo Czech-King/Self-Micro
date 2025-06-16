@@ -12,6 +12,7 @@ pipeline {
 
     tools {
         go 'Go-1.24'
+        sonarRunner 'SonarScanner'
     }
 
     stages {
@@ -38,7 +39,7 @@ pipeline {
             steps {
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
-                        sonar-scanner \
+                        ${SONAR_RUNNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=checkoutservice \
                         -Dsonar.sources=. \
                         -Dsonar.go.coverage.reportPaths=coverage.out
