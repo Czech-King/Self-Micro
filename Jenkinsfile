@@ -39,17 +39,18 @@ pipeline {
                 script {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                        sh '''#!/bin/bash
-                            ${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectKey=checkoutservice \
-                            -Dsonar.sources=. \
-                            -Dsonar.go.coverage.reportPaths=coverage.out \
-                            -Dsonar.login=$SONAR_TOKEN
-                        '''
-                    }
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=checkoutservice \
+                        -Dsonar.sources=. \
+                        -Dsonar.go.coverage.reportPaths=coverage.out \
+                        -Dsonar.login=${SONAR_TOKEN} 
+                        
+                    """
                 }
             }
         }
+      }
 
         stage('Build & Tag Docker Image') {
             steps {
