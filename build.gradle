@@ -135,7 +135,7 @@ publishing {
             url = uri("http://54.196.90.57:8081/repository/maven-releases/")
             allowInsecureProtocol = true
             credentials {
-                username = project.findProperty("") ?: ""
+                username = project.findProperty("nexusUser") ?: ""
                 password = project.findProperty("nexusPassword") ?: ""
             }
         }
