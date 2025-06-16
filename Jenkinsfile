@@ -50,6 +50,7 @@ pipeline {
                 }
             }
         }
+      }
 
         stage('Build & Tag Docker Image') {
             steps {
