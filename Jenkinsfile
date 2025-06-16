@@ -1,3 +1,6 @@
+properties([
+  buildDiscarder(logRotator(numToKeepStr: '100'))
+])
 pipeline {
     agent any
 
