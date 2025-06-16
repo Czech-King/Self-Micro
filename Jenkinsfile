@@ -20,7 +20,9 @@ pipeline {
                 sh '''
                     echo "🔍 Scanning workspace with Trivy..."
                     trivy fs --exit-code 0 --severity HIGH,CRITICAL .
+                     trivy image --severity HIGH,CRITICAL --format html -o trivy-image-report.html priyaa95/adservice:latest || true
                 '''
+                archiveArtifacts artifacts: 'trivy-image-report.html', allowEmptyArchive: true
             }
         }
         stage('SonarQube Analysis') {
