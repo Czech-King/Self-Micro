@@ -11,6 +11,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Build') {
+            steps {
+                sh 'go build -v -o checkoutservice .'
+            }
+        }
         stage('Build & Tag Docker Image') {
             steps {
                 script {
