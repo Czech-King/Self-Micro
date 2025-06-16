@@ -40,7 +40,7 @@ pipeline {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
-                        ${SONAR_RUNNER_HOME}/bin/sonar-scanner \
+                        ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=checkoutservice \
                         -Dsonar.sources=. \
                         -Dsonar.go.coverage.reportPaths=coverage.out
