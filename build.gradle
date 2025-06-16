@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'application'
     id "org.sonarqube" version "4.0.0.2929" //sonar
+    id 'maven-publish'
 }
 sonarqube {
     properties {
@@ -121,4 +122,21 @@ applicationDistribution.into('bin') {
     from(adService)
     from(adServiceClient)
     fileMode = 0755
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "nexus"
+            url = uri("http://54.196.90.57:8081/repository/maven-releases/")
+            credentials {
+                username = project.findProperty("") ?: ""
+                password = project.findProperty("nexusPassword") ?: ""
+            }
+        }
+    }
 }
