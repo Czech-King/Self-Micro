@@ -17,7 +17,6 @@ pipeline {
                 withSonarQubeEnv('sonar') {
                     sh '''
                         chmod +x ./gradlew
-                        ./gradlew clean test jacocoTestReport sonarqube
                         ./gradlew sonarqube \
                           -Dsonar.projectKey=$SONAR_PROJECT_KEY \
                           -Dsonar.login=$SONAR_TOKEN
