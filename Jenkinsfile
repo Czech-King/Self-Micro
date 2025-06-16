@@ -1,3 +1,12 @@
+properties([
+  buildDiscarder(logRotator(numToKeepStr: '100'))
+])
+pipeline {
+    agent any
+
+    tools {
+        go 'Go-1.21'
+     }
 pipeline {
     agent any
 
