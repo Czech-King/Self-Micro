@@ -28,7 +28,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "chmod +x /var/run/docker.sock"
                     docker.build(DOCKER_IMAGE)
                 }
             }
