@@ -12,7 +12,6 @@ pipeline {
 
     tools {
         go 'Go-1.24'
-        sonarQube 'SonarScanner'
     }
 
     stages {
