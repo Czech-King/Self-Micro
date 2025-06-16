@@ -38,7 +38,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                        // sh "docker push ${DOCKER_IMAGE}"
-                        sh "docker push priyaa95/cartservice:latest "
+                        sh "docker push priyaa95/adservice:latest "
                     }
                 }
             }
