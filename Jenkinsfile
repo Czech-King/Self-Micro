@@ -41,7 +41,7 @@ pipeline {
                     withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
                         ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=checkoutservice \
+                        -Dsonar.projectKey=shippingservice \
                         -Dsonar.sources=. \
                         -Dsonar.go.coverage.reportPaths=coverage.out \
                         -Dsonar.login=${SONAR_TOKEN} 
