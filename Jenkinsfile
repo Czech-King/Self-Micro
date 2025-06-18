@@ -10,6 +10,14 @@ pipeline {
     }
 
     stages {
+        stage('SonarQube Analysis') {
+           steps {
+                withSonarQubeEnv('sonar') {
+                    sh 'SonarScannerr -Dsonar.login=$SONAR_TOKEN'
+
+                }
+            }
+        }
         stage('Build & Tag Docker Image') {
             steps {
                 script {
@@ -19,14 +27,7 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh 'SonarScannerr -Dsonar.login=$SONAR_TOKEN'
 
-                }
-            }
-        }
         
         stage('Push Docker Image') {
             steps {
