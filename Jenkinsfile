@@ -16,6 +16,7 @@ pipeline {
 
         stage('Generate Protos') {
             steps {
+                sh 'chmod +x genproto.sh'
                 sh './genproto.sh'
             }
         }
