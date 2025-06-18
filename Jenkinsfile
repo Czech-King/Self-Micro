@@ -3,6 +3,9 @@ properties([
 ])
 pipeline {
     agent any
+    tools {
+        sonarQubeScanner 'SonarScanner' // This must match the name configured in Jenkins
+    }
     environment {
         SONAR_PROJECT_KEY = 'adservice'
         SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
