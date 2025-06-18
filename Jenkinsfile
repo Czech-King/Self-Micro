@@ -13,7 +13,7 @@ pipeline {
         stage('SonarQube Analysis') {
            steps {
                 withSonarQubeEnv('sonar') {
-                    sh 'SonarScannerr -Dsonar.login=$SONAR_TOKEN'
+                    sh 'SonarScanner -Dsonar.login=$SONAR_TOKEN'
 
                 }
             }
