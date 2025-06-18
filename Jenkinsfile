@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t priyaa95/emailservice:latest ."
+                        sh "docker build -t priyaa95/recommendationservice:latest ."
                     }
                 }
             }
