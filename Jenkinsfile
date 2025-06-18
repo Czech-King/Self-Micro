@@ -1,16 +1,33 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'Node-20'  // Match this with the name defined in Jenkins > Global Tool Configuration
+    }
+
 
     stages {
-        stage('Build') {
+        stage('Install dependencies') {
             steps {
-                echo '🔧 Starting Build...'
+                sh 'node -v'       // Should show v20.2.0
+                sh 'npm -v'
                 sh 'npm install'
-                sh 'bash genproto.sh'
-                sh 'npm run lint || true'
-                echo '✅ Build Complete.'
             }
         }
+
+        stage('Generate Protos') {
+            steps {
+                sh 'bash genproto.sh'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        // Additional stages...
+    }
+}
         stage('Build & Tag Docker Image') {
             steps {
                 script {
