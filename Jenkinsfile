@@ -16,7 +16,7 @@ pipeline {
 
         stage('Generate Protos') {
             steps {
-                sh 'bash genproto.sh'
+                sh './genproto.sh'
             }
         }
         stage('Build') {
