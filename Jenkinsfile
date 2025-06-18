@@ -13,13 +13,6 @@ pipeline {
                 sh 'npm install'
             }
         }
-
-        stage('Generate Protos') {
-            steps {
-                sh 'chmod +x genproto.sh'
-                sh './genproto.sh'
-            }
-        }
         stage('Build') {
             steps {
                 sh 'npm run build'
