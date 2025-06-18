@@ -1,5 +1,5 @@
 properties([
-  buildDiscarder(logRotator(numToKeepStr: '100'))
+  buildDiscarder(logRotator(numToKeepStr: '5'))
 ])
 
 pipeline {
