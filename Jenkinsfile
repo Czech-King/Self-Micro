@@ -2,6 +2,15 @@ pipeline {
     agent any
 
     stages {
+        stage('Build') {
+            steps {
+                echo '🔧 Starting Build...'
+                sh 'npm install'
+                sh 'bash genproto.sh'
+                sh 'npm run lint || true'
+                echo '✅ Build Complete.'
+            }
+        }
         stage('Build & Tag Docker Image') {
             steps {
                 script {
