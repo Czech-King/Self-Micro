@@ -3,24 +3,32 @@ properties([
 ])
 pipeline {
     agent any
-    tools {
-        sonarQubeScanner 'SonarScanner' // This must match the name configured in Jenkins
-    }
     environment {
         SONAR_PROJECT_KEY = 'adservice'
+        SONARQUBE_SERVER = 'sonar'
         SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
+       
        
     }
 
     stages {
         stage('SonarQube Analysis') {
-           steps {
-                withSonarQubeEnv('sonar') {
-                    sh 'SonarScanner -Dsonar.login=$SONAR_TOKEN'
-
+            steps {
+                script {
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=productcatalogueservice \
+                        -Dsonar.sources=. \
+                        -Dsonar.go.coverage.reportPaths=coverage.out \
+                        -Dsonar.login=${SONAR_TOKEN} 
+                        
+                    """
                 }
             }
         }
+      }
         stage('Build & Tag Docker Image') {
             steps {
                 script {
