@@ -1,27 +1,34 @@
+properties([
+  buildDiscarder(logRotator(numToKeepStr: '2'))
+])
 pipeline {
     agent any
-    tools {
-        nodejs 'Node20'  // Match this with the name defined in Jenkins > Global Tool Configuration
+    environment {
+        SONAR_PROJECT_KEY = 'adservice'
+        SONARQUBE_SERVER = 'sonar'
+        SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
+       
+       
     }
-
 
     stages {
-        stage('Install dependencies') {
+        stage('SonarQube Analysis') {
             steps {
-                sh 'node -v'       // Should show v20.2.0
-                sh 'npm -v'
-                sh 'npm install'
+                script {
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=productcatalogueservice \
+                        -Dsonar.sources=. \
+                        -Dsonar.go.coverage.reportPaths=coverage.out \
+                        -Dsonar.login=${SONAR_TOKEN} 
+                        
+                    """
+                }
             }
         }
-        stage('Build') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-
-        // Additional stages...
-    }
-}
+      }
         stage('Build & Tag Docker Image') {
             steps {
                 script {
