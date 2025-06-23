@@ -127,6 +127,9 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            groupId = 'adservice'
+            artifactId = 'adservice' // not hipstershop unless that's intentional
+            version = '0.1.0'
         }
     }
     repositories {
