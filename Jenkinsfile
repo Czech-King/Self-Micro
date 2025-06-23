@@ -53,6 +53,7 @@ pipeline {
        stage('Nexus Publish') {
           steps {
              withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                sh 'chmod +x ./gradlew'
                 sh './gradlew publish -PnexusUser=$NEXUS_USER -PnexusPassword=$NEXUS_PASS'
         }
     }
