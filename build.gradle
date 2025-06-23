@@ -132,7 +132,7 @@ publishing {
     repositories {
         maven {
             name = "nexus"
-            url = uri("http://54.159.215.13:8081/repository/maven-snapshots/")
+            url = uri("http://34.229.246.14:8081/repository/maven-releases/")
             allowInsecureProtocol = true
             credentials {
                 username = project.findProperty("nexusUser") ?: ""
