@@ -5,11 +5,11 @@ properties([
 pipeline {
     agent any
 
-    environment {
-        SONAR_PROJECT_KEY = 'adservice'
-        SONARQUBE_SERVER = 'sonar'
-        SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
-    }
+    // environment {
+    //     SONAR_PROJECT_KEY = 'adservice'
+    //     SONARQUBE_SERVER = 'sonar'
+    //     SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
+    // }
 
     stages {
         // stage('SonarQube Analysis') {
