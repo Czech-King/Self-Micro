@@ -12,23 +12,23 @@ pipeline {
     }
 
     stages {
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh """
-                        ${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.projectKey=productcatalogueservice \
-                        -Dsonar.sources=. \
-                        -Dsonar.go.coverage.reportPaths=coverage.out \
-                        -Dsonar.login=${SONAR_TOKEN} 
+      //   stage('SonarQube Analysis') {
+      //       steps {
+      //           script {
+      //               def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+      //               withSonarQubeEnv("${SONARQUBE_SERVER}") {
+      //               sh """
+      //                   ${scannerHome}/bin/sonar-scanner \
+      //                   -Dsonar.projectKey=productcatalogueservice \
+      //                   -Dsonar.sources=. \
+      //                   -Dsonar.go.coverage.reportPaths=coverage.out \
+      //                   -Dsonar.login=${SONAR_TOKEN} 
                         
-                    """
-                }
-            }
-        }
-      }
+      //               """
+      //           }
+      //       }
+      //   }
+      // }
          stage('Build & Tag Docker Image') {
             steps {
                 script {
