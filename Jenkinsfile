@@ -8,11 +8,11 @@ pipeline {
         jdk 'jdk19'
     }
 
-    // environment {
-    //     SONAR_PROJECT_KEY = 'adservice'
-    //     SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
-    //     DOCKER_IMAGE = 'priyaa95/adservice:latest'
-    // }
+    environment {
+        // SONAR_PROJECT_KEY = 'adservice'
+        // SONAR_TOKEN = credentials('sonar') // must match Jenkins credential ID
+        DOCKER_IMAGE = 'priyaa95/adservice:latest'
+    }
 
     stages {
         // stage('Trivy FS Scan') {
