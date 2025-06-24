@@ -11,80 +11,120 @@ spec:
     - host: halomedx.store
       http:
         paths:
-          - path: /ad
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: adservice
+                name: frontend
                 port:
-                  number: 9555
-          - path: /cart
-            pathType: Prefix
-            backend:
-              service:
-                name: cartservice
-                port:
-                  number: 7070
-          - path: /checkout
-            pathType: Prefix
-            backend:
-              service:
-                name: checkoutservice
-                port:
-                  number: 5050
-          - path: /currency
-            pathType: Prefix
-            backend:
-              service:
-                name: currencyservice
-                port:
-                  number: 7000
-          - path: /email
+                  number: 80
+
+    - host: email.halomedx.store
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: emailservice
                 port:
                   number: 5000
-          - path: /payment
+
+    - host: check.halomedx.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: checkoutservice
+                port:
+                  number: 5050
+
+    - host: cart.halomedx.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cartservice
+                port:
+                  number: 7070
+
+    - host: pay.halomedx.store
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: paymentservice
                 port:
                   number: 50051
-          - path: /product
+
+    - host: ad.halomedx.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: adservice
+                port:
+                  number: 9555
+
+    - host: product.halomedx.store
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: productcatalogservice
                 port:
                   number: 3550
-          - path: /recommendation
+
+    - host: halomedx.store
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: recommendationservice
                 port:
                   number: 8080
-          - path: /shipping
+
+    - host: shipping.halomedx.store
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: shippingservice
                 port:
                   number: 50051
-          - path: /load
-            pathType: Prefix
-            backend:
-              service:
-                name: loadgenerator
-                port:
-                  number: 80
+
+    - host: cur.halomedx.store
+      http:
+        paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: frontend
+                name: currencyservice
+                port:
+                  number: 7000
+
+    - host: load.halomedx.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loadgenerator
                 port:
                   number: 80
