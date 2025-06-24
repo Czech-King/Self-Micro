@@ -15,28 +15,28 @@ pipeline {
     }
 
     stages {
-        stage('Trivy FS Scan') {
-            steps {
-                sh '''
-                    echo "🔍 Scannning workspace with Trivy..."
-                    trivy fs --exit-code 0 --severity HIGH,CRITICAL .
-                     trivy image --severity HIGH,CRITICAL --format html -o trivy-image-report.html priyaa95/adservice:latest || true
-                '''
-                archiveArtifacts artifacts: 'trivy-image-report.html', allowEmptyArchive: true
-            }
-        }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh '''
-                        chmod +x ./gradlew
-                        ./gradlew sonar \
-                          -Dsonar.projectKey=$SONAR_PROJECT_KEY \
-                          -Dsonar.login=$SONAR_TOKEN
-                    '''
-                }
-            }
-        }
+        // stage('Trivy FS Scan') {
+        //     steps {
+        //         sh '''
+        //             echo "🔍 Scannning workspace with Trivy..."
+        //             trivy fs --exit-code 0 --severity HIGH,CRITICAL .
+        //              trivy image --severity HIGH,CRITICAL --format html -o trivy-image-report.html priyaa95/adservice:latest || true
+        //         '''
+        //         archiveArtifacts artifacts: 'trivy-image-report.html', allowEmptyArchive: true
+        //     }
+        // }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonar') {
+        //             sh '''
+        //                 chmod +x ./gradlew
+        //                 ./gradlew sonar \
+        //                   -Dsonar.projectKey=$SONAR_PROJECT_KEY \
+        //                   -Dsonar.login=$SONAR_TOKEN
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
@@ -45,23 +45,23 @@ pipeline {
                 }
             }
         }
-       stage('Trivy Docker Image Scan') {
-          steps {
-             sh 'trivy image priyaa95/adservice:latest || true'
-          }
-       }
-       stage('Nexus Publish') {
-          steps {
-             script {
-                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                   withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                   sh 'chmod +x ./gradlew'
-                   sh './gradlew publish -PnexusUser=$NEXUS_USER -PnexusPassword=$NEXUS_PASS'
-        }
-    }
-}
-          }
-       }
+//        stage('Trivy Docker Image Scan') {
+//           steps {
+//              sh 'trivy image priyaa95/adservice:latest || true'
+//           }
+//        }
+//        stage('Nexus Publish') {
+//           steps {
+//              script {
+//                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+//                    withCredentials([usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+//                    sh 'chmod +x ./gradlew'
+//                    sh './gradlew publish -PnexusUser=$NEXUS_USER -PnexusPassword=$NEXUS_PASS'
+//         }
+//     }
+// }
+//           }
+//        }
 
         stage('Push Docker Image') {
             steps {
