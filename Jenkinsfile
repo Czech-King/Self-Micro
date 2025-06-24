@@ -5,10 +5,10 @@ properties([
 pipeline {
     agent any
 
-    environment {
-        SONARQUBE_SERVER = 'sonar' // Must match the name in Jenkins -> Manage Jenkins -> Configure System
-        SONAR_TOKEN = credentials('sonar') // Jenkins credential ID for SonarQube token
-    }
+    // environment {
+    //     SONARQUBE_SERVER = 'sonar' // Must match the name in Jenkins -> Manage Jenkins -> Configure System
+    //     SONAR_TOKEN = credentials('sonar') // Jenkins credential ID for SonarQube token
+    // }
 
     tools {
         go 'Go-1.24'
