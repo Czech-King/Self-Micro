@@ -48,7 +48,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: cart
+                name: cartservice
                 port:
                   number: 7070
 
